@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>بيانات أقل ظهورًا. حماية أكثر. | Less exposed data. More protection.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EFEFEE;--stage:#FAFAFA;--card:#FFFFFF;--ink:#0A0A0A;--sub:#737373;--faint:#A3A3A3;--line:#E5E5E5;--muted:#F4F4F5;
+  --risk:#D9531E;--risk-bg:#FCEBDD;--risk-br:#F6CDB0;--safe:#2F8A47;--safe-bg:#E4F4E8;--safe-br:#BFE3C9;
+  --panel:#0A0A0A;--panel-2:#161617;--panel-3:#1E1E20;--panel-line:#2E2E32;--panel-ink:#F4F4F5;--panel-sub:#A1A1AA;--panel-faint:#71717A;
+  --btn-bg:#0A0A0A;--btn-ink:#FFFFFF;
+  --font-ar:"Cairo","Geist",system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;
+  --font-en:"Geist",system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+  --mono:"Geist Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  color-scheme:light;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0B0B0C;--stage:#121214;--card:#18181B;--ink:#F4F4F5;--sub:#A1A1AA;--faint:#71717A;--line:#27272A;--muted:#1F1F23;
+    --risk:#F0814F;--risk-bg:#2A1A12;--risk-br:#4A2A1C;--safe:#5CC27A;--safe-bg:#132219;--safe-br:#1F3A28;
+    --panel:#000000;--panel-2:#111113;--panel-3:#18181B;--panel-line:#27272A;
+    --btn-bg:#F4F4F5;--btn-ink:#0A0A0A;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0B0B0C;--stage:#121214;--card:#18181B;--ink:#F4F4F5;--sub:#A1A1AA;--faint:#71717A;--line:#27272A;--muted:#1F1F23;
+  --risk:#F0814F;--risk-bg:#2A1A12;--risk-br:#4A2A1C;--safe:#5CC27A;--safe-bg:#132219;--safe-br:#1F3A28;
+  --panel:#000000;--panel-2:#111113;--panel-3:#18181B;--panel-line:#27272A;
+  --btn-bg:#F4F4F5;--btn-ink:#0A0A0A;
+}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 72px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-ar);-webkit-font-smoothing:antialiased;line-height:1.6}
+html[lang="en"] body{font-family:var(--font-en);line-height:1.55}
+button{font:inherit;color:inherit;cursor:pointer}
+.mono{font-family:var(--mono);direction:ltr;unicode-bidi:isolate}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px 48px}
+
+/* header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:saturate(1.4) blur(12px);-webkit-backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid var(--line)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(12px)}
+.top-in{max-width:720px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{font-size:14px;color:var(--sub);white-space:nowrap;font-family:var(--font-en)}
+.brand b{color:var(--ink)}
+.seg{display:inline-flex;background:var(--muted);border:1px solid var(--line);border-radius:12px;padding:3px;gap:2px}
+.seg button{border:0;background:transparent;padding:6px 14px;border-radius:9px;font-size:14px;font-weight:600;color:var(--sub);transition:background .2s,color .2s}
+.seg button[aria-pressed="true"]{background:var(--btn-bg);color:var(--btn-ink)}
+.seg button:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+#langAr{font-family:var(--font-ar)} #langEn{font-family:var(--font-en)}
+
+/* layout */
+.sheet{background:var(--stage);border:1px solid var(--line);border-radius:24px;margin-top:20px;overflow:hidden}
+.panel{background:var(--panel);color:#fff;border-radius:20px;margin:16px}
+.hero{padding:40px 36px 28px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.chip-soon{background:#18301F;color:#5CC27A;font-size:13px;font-weight:600;padding:4px 13px;border-radius:999px}
+.chip-suite{background:var(--panel-3);border:1px solid var(--panel-line);color:#D4D4D8;font-size:13px;padding:3px 13px;border-radius:999px}
+h1{margin:0;font-size:clamp(34px,7vw,48px);line-height:1.25;font-weight:800;letter-spacing:-.01em}
+html[lang="en"] h1{letter-spacing:-.03em;line-height:1.08}
+h1 .dim{color:var(--panel-faint)}
+.hero p{margin:14px 0 0;font-size:17px;color:var(--panel-sub);max-width:56ch}
+section{padding:44px 36px}
+section+section{border-top:1px solid var(--line)}
+.chap{font-size:14px;color:var(--sub);margin:0 0 10px;display:flex;gap:10px;align-items:baseline}
+.chap .n{font-family:var(--mono);font-size:12px;color:var(--faint)}
+.chap b{color:var(--ink);font-weight:600}
+h2{margin:0;font-size:clamp(24px,4.6vw,30px);line-height:1.35;font-weight:700}
+html[lang="en"] h2{letter-spacing:-.02em;line-height:1.2}
+.lede{margin:10px 0 0;font-size:16px;color:var(--sub)}
+.cap{font-size:12px;color:var(--faint);margin-top:10px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
+.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:20px}
+@media (max-width:620px){
+  .grid3,.grid2{grid-template-columns:1fr}
+  .hero{padding:32px 22px 22px} section{padding:36px 20px} .panel{margin:12px}
+}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px}
+.card.dark{background:var(--panel);border-color:var(--panel);color:#fff}
+.q{font-size:13px;color:var(--sub)} .card.dark .q{color:var(--faint)}
+.a{font-size:17px;font-weight:700;line-height:1.45;margin-top:4px}
+.tag{display:inline-block;background:var(--muted);border:1px solid var(--line);border-radius:8px;padding:3px 10px;font-size:12px;font-weight:500;margin:0 0 6px;white-space:nowrap}
+.tag.solid{background:var(--btn-bg);color:var(--btn-ink);border-color:var(--btn-bg);font-weight:600}
+.tags{display:flex;flex-wrap:wrap;gap:0 6px;margin-top:12px}
+.strike{font-family:var(--mono);font-size:13px;color:var(--faint);text-decoration:line-through;direction:ltr;text-align:start}
+.big{font-family:var(--mono);font-size:15px;font-weight:600;margin-top:3px;direction:ltr}
+html[dir="rtl"] .strike, html[dir="rtl"] .big{text-align:right}
+.icon-box{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:var(--muted);margin-top:12px}
+.card.dark .icon-box{background:var(--panel-3)}
+svg.i{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* profile card */
+.profile{background:var(--panel-2);border:1px solid var(--panel-line);border-radius:16px;overflow:hidden;margin-top:24px}
+.p-head{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--panel-line);transition:background .25s}
+.avatar{width:36px;height:36px;border-radius:50%;background:#26262A;color:var(--panel-sub);display:grid;place-items:center;font-family:var(--mono);font-size:13px;flex:none}
+.p-name{font-size:17px;font-weight:700;color:var(--panel-ink);line-height:1.3}
+.p-role{font-size:12px;color:var(--panel-faint)}
+.pill{margin-inline-start:auto;font-size:12px;font-weight:700;padding:3px 11px;border-radius:999px;white-space:nowrap;transition:background .3s,color .3s}
+.pill.vis{background:#3A2117;color:#F0814F} .pill.msk{background:#18301F;color:#5CC27A}
+.p-row{display:flex;align-items:center;gap:12px;padding:11px 16px;border-bottom:1px solid var(--panel-line);transition:background .25s}
+.p-row:last-child{border-bottom:0}
+.p-row.hl,.p-head.hl{background:var(--panel-3)}
+.p-label{font-size:12px;color:var(--panel-sub)}
+.p-val{font-family:var(--mono);font-size:14px;letter-spacing:.3px;direction:ltr;transition:color .3s}
+html[dir="rtl"] .p-val{text-align:right}
+.p-val.vis{color:#F0814F} .p-val.msk{color:var(--panel-ink)}
+.p-row .eye{margin-inline-start:auto;color:var(--panel-sub)}
+.replay{display:inline-flex;align-items:center;gap:8px;margin-top:14px;background:var(--panel-3);border:1px solid var(--panel-line);color:#D4D4D8;border-radius:999px;padding:6px 14px;font-size:13px}
+.replay:hover{background:#26262A}
+.hero-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.hero-cap{font-size:12px;color:var(--panel-faint);margin-top:14px}
+
+/* why */
+.why{background:var(--card);border:1px solid var(--line);border-radius:16px;margin-top:20px}
+.why-row{display:flex;gap:14px;padding:16px 18px;border-bottom:1px solid var(--line)}
+.why-row:last-child{border-bottom:0}
+.num{width:30px;height:30px;border-radius:8px;background:var(--muted);display:grid;place-items:center;font-family:var(--mono);font-size:12px;flex:none}
+.why-t{font-size:16px;font-weight:700} .why-d{font-size:14px;color:var(--sub)}
+
+/* before after */
+.ba{border-radius:16px;padding:12px;border:1px solid}
+.ba.before{background:var(--risk-bg);border-color:var(--risk-br)} .ba.after{background:var(--safe-bg);border-color:var(--safe-br)}
+.ba-h{display:flex;justify-content:space-between;align-items:center;padding:4px 6px 12px;font-size:16px;font-weight:700}
+.ba-pill{background:var(--card);font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px}
+.ba.before .ba-pill{color:var(--risk)} .ba.after .ba-pill{color:var(--safe)}
+.ba-list{background:var(--card);border-radius:12px}
+.ba-row{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--line)}
+.ba-row:last-child{border-bottom:0}
+.ba-row .l{font-size:12px;color:var(--sub)}
+.ba-row .v{font-family:var(--mono);font-size:12.5px;direction:ltr;white-space:nowrap}
+html[dir="rtl"] .ba-row .v{text-align:right}
+.ba-row .v.name{font-family:inherit;font-size:14px;direction:inherit}
+.ba.before .v{color:var(--risk)}
+.ba-row .lk{margin-inline-start:auto;color:var(--faint)}
+.ba-row .lk svg{width:15px;height:15px}
+
+/* demo */
+.demo{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;margin-top:20px}
+.demo-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.demo-lbl{font-size:13px;color:var(--sub);margin-bottom:6px}
+.try{font-size:12px;color:var(--faint);display:flex;align-items:center;gap:6px}
+.try .dot{width:7px;height:7px;border-radius:50%;background:var(--safe);animation:pulse 1.6s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.field{display:flex;align-items:center;gap:12px;margin-top:16px;border:1px solid var(--line);background:var(--stage);border-radius:14px;padding:14px 16px;transition:background .3s,border-color .3s}
+.field.ok{background:var(--safe-bg);border-color:var(--safe-br)} .field.no{background:var(--risk-bg);border-color:var(--risk-br)}
+.field .l{font-size:13px;color:var(--sub)}
+.field .v{font-family:var(--mono);font-size:22px;letter-spacing:1px;direction:ltr}
+html[dir="rtl"] .field .v{text-align:right}
+.eye-btn{margin-inline-start:auto;width:48px;height:48px;border-radius:12px;border:1px solid var(--line);background:var(--card);display:grid;place-items:center;flex:none;transition:transform .12s,box-shadow .2s}
+.eye-btn:hover{box-shadow:0 0 0 4px color-mix(in srgb,var(--ink) 10%,transparent)}
+.eye-btn:active{transform:scale(.94)}
+.eye-btn svg{width:22px;height:22px}
+.eye-btn:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.status{display:inline-flex;align-items:center;gap:7px;margin-top:14px;font-size:14px;font-weight:600;padding:5px 12px;border-radius:999px;background:var(--muted);color:var(--sub)}
+.status.ok{background:var(--safe-bg);color:var(--safe)}
+.status svg{width:15px;height:15px}
+.shake{animation:shake .35s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}
+@media (max-width:620px){.steps{grid-template-columns:1fr}}
+.step .n{font-family:var(--mono);font-size:12px;color:var(--faint)}
+.step .t{font-size:15px;font-weight:700;margin-top:10px} .step .d{font-size:13px;color:var(--sub)}
+.step .vis{height:36px;display:flex;align-items:center;margin-top:8px}
+.roles{background:var(--card);border:1px solid var(--line);border-radius:14px;margin-top:12px}
+.roles .h{font-size:12px;color:var(--faint);padding:10px 14px 0}
+.role{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--line)}
+.role:last-child{border-bottom:0}
+.role .av{width:30px;height:30px;border-radius:50%;background:var(--muted);display:grid;place-items:center;font-family:var(--mono);font-size:11px}
+.role .nm{font-size:14px;font-weight:600} .role .en{font-size:12px;color:var(--faint);font-weight:400}
+.role .r{margin-inline-start:auto;display:flex;align-items:center;gap:6px}
+.r-pill{font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px}
+.r-pill.ok{background:var(--safe-bg);color:var(--safe)} .r-pill.no{background:var(--muted);color:var(--sub)}
+.role svg{width:16px;height:16px}
+
+/* closing */
+.closing{padding:40px 36px 42px}
+.closing .chap{color:var(--panel-sub)} .closing .chap b{color:#fff} .closing .chap .n{color:var(--panel-faint)}
+.closing h2{color:#fff} .closing .lede{color:var(--panel-sub)}
+.cta{display:inline-flex;align-items:center;gap:8px;margin-top:22px;background:#fff;color:#0A0A0A;text-decoration:none;font-weight:700;font-size:15px;padding:12px 24px;border-radius:12px}
+.cta:hover{background:#E4E4E7}
+@media (max-width:620px){.closing{padding:32px 22px}}
+footer{display:flex;justify-content:space-between;gap:12px;padding:18px 36px 24px;font-size:12px;color:var(--faint)}
+footer b{color:var(--ink)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="eye" viewBox="0 0 24 24"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="eyeoff" viewBox="0 0 24 24"><path d="M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49"/><path d="M14.084 14.158a3 3 0 0 1-4.242-4.242"/><path d="M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143"/><path d="m2 2 20 20"/></symbol>
+  <symbol id="lock" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+  <symbol id="replay" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></symbol>
+  <symbol id="arrow" viewBox="0 0 24 24"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></symbol>
+</svg>
+
+<header class="top">
+  <div class="top-in">
+    <div class="brand"><b>Manafa</b>&nbsp;&nbsp;Digital Factory</div>
+    <div class="seg" role="group" aria-label="Language">
+      <button id="langAr" type="button" aria-pressed="true" lang="ar">العربية</button>
+      <button id="langEn" type="button" aria-pressed="false" lang="en">English</button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+<main class="sheet">
+
+  <div class="panel">
+    <div class="hero">
+      <div class="chips"><span class="chip-soon" data-t="soon"></span><span class="chip-suite" data-t="suite"></span></div>
+      <h1><span data-t="h1a"></span><br><span class="dim" data-t="h1b"></span></h1>
+      <p data-t="heroP"></p>
+
+      <div class="profile" aria-live="polite">
+        <div class="p-head" id="pHead">
+          <div class="avatar" id="pAv">••</div>
+          <div><div class="p-name" id="pName"></div><div class="p-role" data-t="role"></div></div>
+          <span class="pill msk" id="pPill"></span>
+        </div>
+        <div id="pRows"></div>
+      </div>
+      <div class="hero-foot">
+        <button class="replay" id="replay" type="button"><svg class="i"><use href="#replay"/></svg><span data-t="replay"></span></button>
+        <div class="hero-cap" data-t="heroCap"></div>
+      </div>
+    </div>
+  </div>
+
+  <section>
+    <p class="chap"><span class="n">01</span><b data-t="c1"></b></p>
+    <h2 data-t="h2_1"></h2>
+    <p class="lede" data-t="l1"></p>
+    <div class="grid3">
+      <div class="card"><div class="q" data-t="q1q"></div><div class="a" data-t="q1a"></div>
+        <div class="strike" style="margin-top:12px">1092837465</div><div class="big">••••••7465</div></div>
+      <div class="card"><div class="q" data-t="q2q"></div><div class="a" data-t="q2a"></div>
+        <div class="tags"><span class="tag">Admin Panel</span><span class="tag">Customer Hub</span><span class="tag solid" data-t="q2chip"></span></div></div>
+      <div class="card dark"><div class="q" data-t="q3q"></div><div class="a" data-t="q3a"></div>
+        <div class="icon-box"><svg class="i"><use href="#eye"/></svg></div></div>
+    </div>
+    <div class="card" style="margin-top:12px"><div class="q" data-t="fieldsT"></div><div class="tags" id="fieldTags"></div></div>
+  </section>
+
+  <section>
+    <p class="chap"><span class="n">02</span><b data-t="c2"></b></p>
+    <h2 data-t="h2_2"></h2>
+    <p class="lede" data-t="l2"></p>
+    <div class="why" id="why"></div>
+  </section>
+
+  <section>
+    <p class="chap"><span class="n">03</span><b data-t="c3"></b></p>
+    <h2 data-t="h2_3"></h2>
+    <div class="grid2">
+      <div class="ba before"><div class="ba-h"><span data-t="today"></span><span class="ba-pill" data-t="pVis"></span></div><div class="ba-list" id="baBefore"></div></div>
+      <div class="ba after"><div class="ba-h"><span data-t="after"></span><span class="ba-pill" data-t="pMsk"></span></div><div class="ba-list" id="baAfter"></div></div>
+    </div>
+    <div class="cap" data-t="baCap"></div>
+  </section>
+
+  <section>
+    <p class="chap"><span class="n">04</span><b data-t="c4"></b></p>
+    <h2 data-t="h2_4"></h2>
+    <p class="lede" data-t="l4"></p>
+
+    <div class="demo">
+      <div class="demo-top">
+        <div>
+          <div class="demo-lbl" data-t="viewAs"></div>
+          <div class="seg" role="group" id="roleSeg">
+            <button type="button" id="r1" aria-pressed="true" data-t="r1"></button>
+            <button type="button" id="r2" aria-pressed="false" data-t="r2"></button>
+          </div>
+        </div>
+        <div class="try"><span class="dot"></span><span data-t="tryIt"></span></div>
+      </div>
+      <div class="field" id="field">
+        <div><div class="l" data-t="idLabel"></div><div class="v" id="fVal">••••••7465</div></div>
+        <button class="eye-btn" id="eyeBtn" type="button"><svg class="i" id="eyeIc"><use href="#eye"/></svg></button>
+      </div>
+      <div class="status" id="status"></div>
+    </div>
+
+    <div class="steps" id="steps"></div>
+    <div class="roles">
+      <div class="h" data-t="rolesT"></div>
+      <div class="role"><div class="av">SA</div><div class="nm"><span data-t="r1"></span> <span class="en" data-t="r1en"></span></div>
+        <div class="r"><svg class="i" style="color:var(--safe)"><use href="#eye"/></svg><span class="r-pill ok" data-t="r1can"></span></div></div>
+      <div class="role"><div class="av">CC</div><div class="nm"><span data-t="r2"></span> <span class="en" data-t="r2en"></span></div>
+        <div class="r"><svg class="i" style="color:var(--faint)"><use href="#lock"/></svg><span class="r-pill no" data-t="r2can"></span></div></div>
+    </div>
+  </section>
+
+  <div class="panel">
+    <div class="closing">
+      <p class="chap"><span class="n">05</span><b data-t="c5"></b></p>
+      <h2 data-t="h2_5"></h2>
+      <p class="lede" data-t="l5"></p>
+      <a class="cta" href="https://manafaco.atlassian.net/browse/DF-4611" target="_blank" rel="noopener"><span data-t="btn"></span><svg class="i"><use href="#arrow"/></svg></a>
+    </div>
+  </div>
+
+  <footer><div><b>Manafa</b>&nbsp;&nbsp;Digital Factory</div><div data-t="foot"></div></footer>
+</main>
+</div>
+
+<script>
+const B="•";
+const T={
+ ar:{soon:"● قريبًا",suite:"منظومة منافع الداخلية",h1a:"بيانات أقل ظهورًا.",h1b:"حماية أكثر.",
+  heroP:"قريبًا بنوحّد طريقة عرض البيانات الحساسة في جميع منصات منافع الداخلية، وحبّينا نشاركك التغيير قبل إطلاقه.",
+  role:"خدمة العملاء",replay:"إعادة العرض",heroCap:"بيانات توضيحية، وليست لعميل حقيقي.",pillVis:"● ظاهرة كاملة",pillMsk:"● مخفية",
+  name:"نجلاء الحارثي",nameM:"ن"+B.repeat(4)+" ا"+B.repeat(6),av:"نح",
+  labels:["رقم الهوية / الإقامة","الآيبان IBAN","رقم الجوال","البريد الإلكتروني"],
+  c1:"وش اللي بيتغيّر؟",h2_1:"البيانات الحساسة بتظهر مخفية تلقائيًا.",l1:"بدل ما تظهر كاملة، بتظهر مخفية بشكل افتراضي، وبنفس الطريقة في كل منصة.",
+  q1q:"التغيير",q1a:"البيانات الحساسة بتظهر مخفية",q2q:"النطاق",q2a:"في كل منصات منافع الداخلية",q2chip:"المنظومة كاملة",
+  q3q:"ماذا يعني لك؟",q3a:"طريقة عرض جديدة، والإظهار حسب صلاحيتك",fieldsT:"البيانات اللي يشملها التغيير",
+  fields:["الاسم الكامل","رقم الهوية / الإقامة","IBAN","رقم الحساب البنكي","رقم الجوال","البريد الإلكتروني"],
+  c2:"ليش هذا التغيير؟",h2_2:"لأن البيانات الحساسة تستحق قاعدة واحدة.",
+  l2:"اليوم تظهر البيانات الحساسة بأكثر من طريقة ومن غير قاعدة واضحة، فممكن يظهر نفس الرقم كامل في مكان ومخفي في مكان ثاني.",
+  why:[["شكل واحد","طريقة عرض واحدة في كل المنصات."],["خصوصية أكثر","كلما قلّ ظهور البيانات الحساسة، قلّ خطر كشفها."],["قاعدة واضحة","قاعدة واحدة تحدد ما يُخفى، وكيف يُخفى، ومن يمكنه إظهاره."]],
+  c3:"كيف بيظهر لك التغيير؟",h2_3:"نفس الملف، لكن محمي.",today:"اليوم",after:"بعد التغيير",pVis:"● ظاهرة كاملة",pMsk:"● مخفية",
+  baLabels:["الاسم الكامل","رقم الهوية / الإقامة","IBAN","رقم الجوال","البريد الإلكتروني"],
+  baCap:"أمثلة توضيحية، وطريقة الإخفاء النهائية لكل حقل تتحدد ضمن المشروع.",
+  c4:"مين يقدر يشوف البيانات؟",h2_4:"مخفية للجميع، وتظهر حسب الصلاحية.",l4:"البيانات مخفية دائمًا، والأدوار المصرّح لها فقط تقدر تُظهرها.",
+  viewAs:"عرض البيانات كـ",tryIt:"جرّب: اضغط على العين",idLabel:"رقم الهوية / الإقامة",r1:"مدير النظام",r2:"خدمة العملاء",r1en:"Super Admin",r2en:"Customer Care",
+  s0:"● مخفية افتراضيًا",s1:"✓ عندك صلاحية: تظهر كاملة",s2:"ما عندك صلاحية: تبقى مخفية",
+  steps:[["مخفية افتراضيًا","تظهر البيانات مخفية."],["طلب الإظهار","بالضغط على أيقونة العين."],["التحقق من الصلاحية","هل يسمح دورك بالإظهار؟"]],
+  rolesT:"مثال على الأدوار",r1can:"يقدر يُظهرها",r2can:"تظهر له مخفية",
+  c5:"وش المطلوب منك؟",h2_5:"لا شيء حاليًا.",
+  l5:"لما ينطلق التغيير، بتلاحظ إن البيانات الحساسة تظهر مخفية، وإمكانية إظهارها تعتمد على صلاحيات دورك. حبّينا نشاركك من الآن، عشان يكون الشكل الجديد مألوف لك.",
+  btn:"التفاصيل في DF-4611",foot:"رسالة داخلية، نرجو عدم مشاركتها خارج منافع.",title:"بيانات أقل ظهورًا. حماية أكثر."},
+ en:{soon:"● Coming soon",suite:"Manafa Internal Suite",h1a:"Less exposed data.",h1b:"More protection.",
+  heroP:"We’re standardizing how sensitive data is displayed across every Manafa internal platform, and we want you to know what’s changing before it goes live.",
+  role:"Customer Care",replay:"Replay",heroCap:"Illustrative data, not a real customer.",pillVis:"● Fully visible",pillMsk:"● Masked",
+  name:"Najla Alharthi",nameM:"N"+B.repeat(4)+" A"+B.repeat(7),av:"NA",
+  labels:["National ID / Iqama","IBAN","Mobile","Email"],
+  c1:"What’s changing?",h2_1:"Sensitive data will be masked by default.",l1:"Instead of appearing in full, sensitive values will be masked by default, the same way on every platform.",
+  q1q:"The change",q1a:"Sensitive data appears masked",q2q:"The scope",q2a:"Every Manafa internal platform",q2chip:"The entire suite",
+  q3q:"What it means for you",q3a:"A new view, with reveal based on your permissions",fieldsT:"Data covered by this change",
+  fields:["Full Name","National ID / Iqama","IBAN","Bank account","Mobile","Email"],
+  c2:"Why this change?",h2_2:"Because sensitive data deserves one rule.",
+  l2:"Today, sensitive data appears in different ways with no clear rule, so the same number can be fully visible in one place and masked in another.",
+  why:[["One look","One display standard across every platform."],["More privacy","The less sensitive data is exposed, the lower the risk of it leaking."],["A clear rule","One rule for what is masked, how it’s masked, and who can reveal it."]],
+  c3:"How will you see it?",h2_3:"Same record, now protected.",today:"Today",after:"After the change",pVis:"● Fully visible",pMsk:"● Masked",
+  baLabels:["Full Name","National ID / Iqama","IBAN","Mobile","Email"],
+  baCap:"Illustrative examples. The final masking pattern for each field is defined as part of the project.",
+  c4:"Who can see the data?",h2_4:"Masked for everyone. Revealed by permission.",l4:"Data is always masked by default, and only authorized roles can reveal it.",
+  viewAs:"View data as",tryIt:"Try it: click the eye",idLabel:"National ID / Iqama",r1:"Super Admin",r2:"Customer Care",r1en:"",r2en:"",
+  s0:"● Masked by default",s1:"✓ You have permission: shown in full",s2:"No permission: stays masked",
+  steps:[["Masked by default","Values start masked."],["Reveal requested","By clicking the eye icon."],["Permission checked","Does your role allow it?"]],
+  rolesT:"Example roles",r1can:"Can reveal",r2can:"Sees masked only",
+  c5:"What do you need to do?",h2_5:"Nothing for now.",
+  l5:"Once the change goes live, you’ll notice sensitive data appears masked, and whether you can reveal it depends on your role’s permissions. We’re sharing it now so the new look feels familiar.",
+  btn:"Details in DF-4611",foot:"Internal communication. Please don’t share outside Manafa.",title:"Less exposed data. More protection."}
+};
+const FULL=["1092837465","SA03 8000 0000 6080 1016 7519","+966 55 214 1234","najla.a@mail.com"];
+const MASK=[B.repeat(6)+"7465",B.repeat(16)+"7519",B.repeat(6)+"1234","n"+B.repeat(5)+"@mail.com"];
+const BA_FULL=(t)=>[t.name,...FULL]; const BA_MASK=(t)=>[t.nameM,...MASK];
+let lang="ar", role=1, timer=null;
+const $=id=>document.getElementById(id);
+const esc=s=>s.replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+
+function maskSpaced(v,p,keep=4){const idx=[...v].map((c,j)=>c!==" "?j:-1).filter(j=>j>=0).slice(0,-keep);const k=Math.round(idx.length*p);const o=[...v];idx.slice(0,k).forEach(j=>o[j]=B);return o.join("")}
+function partial(i,p){if(p>=1)return MASK[i];if(i===3){const loc="najla.a";const k=Math.round((loc.length-1)*p);return loc[0]+B.repeat(k)+loc.slice(1+k)+"@mail.com"}return maskSpaced(FULL[i],p)}
+function namePartial(t,p){if(p>=1)return t.nameM;const [w1,w2]=t.name.split(" ");const a=[...w1],b=[...w2];const k1=Math.round((a.length-1)*Math.min(1,p*2)),k2=Math.round((b.length-1)*Math.max(0,p*2-1));return a[0]+B.repeat(k1)+a.slice(1+k1).join("")+" "+b[0]+B.repeat(k2)+b.slice(1+k2).join("")}
+
+function renderProfile(vals,cls,name,pillVis,hl){
+  const t=T[lang];
+  $("pName").textContent=name; $("pAv").textContent=name===t.nameM?B+B:t.av;
+  const p=$("pPill"); p.textContent=pillVis?t.pillVis:t.pillMsk; p.className="pill "+(pillVis?"vis":"msk");
+  $("pHead").classList.toggle("hl",hl===-1);
+  $("pRows").innerHTML=t.labels.map((l,i)=>`<div class="p-row${hl===i?" hl":""}"><div><div class="p-label">${esc(l)}</div><div class="p-val ${cls[i]}">${esc(vals[i])}</div></div><svg class="i eye"><use href="#eye"/></svg></div>`).join("");
+}
+function finalProfile(){renderProfile(MASK,["msk","msk","msk","msk"],T[lang].nameM,false,null)}
+function playWave(){
+  clearTimeout(timer); const t=T[lang];
+  if(matchMedia("(prefers-reduced-motion: reduce)").matches){finalProfile();return}
+  const cur=[...FULL], cls=["vis","vis","vis","vis"]; let seq=[];
+  seq.push([()=>renderProfile(cur,cls,t.name,true,null),1300]);
+  for(let s=1;s<=6;s++){const p=s/6;seq.push([()=>renderProfile(cur,cls,namePartial(t,p),true,-1),70])}
+  for(let i=0;i<4;i++)for(let s=1;s<=6;s++){const p=s/6;seq.push([()=>{cur[i]=partial(i,p);cls[i]=p>=1?"msk":"vis";renderProfile(cur,cls,t.nameM,true,i)},65])}
+  seq.push([finalProfile,0]);
+  let k=0;const step=()=>{if(k>=seq.length)return;const [fn,d]=seq[k++];fn();timer=setTimeout(step,d)};step();
+}
+function renderBA(){
+  const t=T[lang], rtlName=lang==="ar";
+  const row=(l,v,i,lock)=>`<div class="ba-row"><div><div class="l">${esc(l)}</div><div class="v${i===0?" name":""}">${esc(v)}</div></div>${lock?'<span class="lk"><svg class="i"><use href="#lock"/></svg></span>':""}</div>`;
+  $("baBefore").innerHTML=BA_FULL(t).map((v,i)=>row(t.baLabels[i],v,i,false)).join("");
+  $("baAfter").innerHTML=BA_MASK(t).map((v,i)=>row(t.baLabels[i],v,i,true)).join("");
+}
+function setStatus(kind){
+  const t=T[lang], s=$("status"), f=$("field");
+  f.className="field"+(kind===1?" ok":kind===2?" no":"");
+  if(kind===0){s.className="status";s.textContent=t.s0}
+  if(kind===1){s.className="status ok";s.textContent=t.s1}
+  if(kind===2){s.className="status";s.innerHTML='<svg class="i"><use href="#lock"/></svg>'+esc(t.s2)}
+}
+let revealed=false;
+function resetDemo(){revealed=false;$("fVal").textContent=MASK[0];$("eyeIc").innerHTML='<use href="#eye"/>';setStatus(0)}
+$("eyeBtn").addEventListener("click",()=>{
+  if(role===1){revealed=!revealed;$("fVal").textContent=revealed?FULL[0]:MASK[0];$("eyeIc").innerHTML=revealed?'<use href="#eyeoff"/>':'<use href="#eye"/>';setStatus(revealed?1:0)}
+  else{$("eyeIc").innerHTML='<use href="#lock"/>';setStatus(2);const f=$("field");f.classList.remove("shake");void f.offsetWidth;f.classList.add("shake")}
+});
+function setRole(r){role=r;$("r1").setAttribute("aria-pressed",r===1);$("r2").setAttribute("aria-pressed",r===2);resetDemo()}
+$("r1").addEventListener("click",()=>setRole(1)); $("r2").addEventListener("click",()=>setRole(2));
+
+function apply(l,animate=true){
+  lang=l; const t=T[l]; const h=document.documentElement;
+  h.lang=l; h.dir=l==="ar"?"rtl":"ltr"; document.title=t.title+" | DF-4611";
+  $("langAr").setAttribute("aria-pressed",l==="ar"); $("langEn").setAttribute("aria-pressed",l==="en");
+  document.querySelectorAll("[data-t]").forEach(e=>{const v=t[e.dataset.t]; if(typeof v==="string") e.textContent=v});
+  $("fieldTags").innerHTML=t.fields.map(f=>`<span class="tag">${esc(f)}</span>`).join("");
+  $("why").innerHTML=t.why.map((w,i)=>`<div class="why-row"><div class="num">0${i+1}</div><div><div class="why-t">${esc(w[0])}</div><div class="why-d">${esc(w[1])}</div></div></div>`).join("");
+  $("steps").innerHTML=t.steps.map((s,i)=>`<div class="card step"><div class="n">0${i+1}</div><div class="vis">${i===0?'<span class="mono" style="font-size:14px">'+MASK[0]+'</span>':'<div class="icon-box" style="margin:0"><svg class="i"><use href="#'+(i===1?"eye":"lock")+'"/></svg></div>'}</div><div class="t">${esc(s[0])}</div><div class="d">${esc(s[1])}</div></div>`).join("");
+  renderBA(); resetDemo();
+  if(animate) playWave(); else finalProfile();
+  try{localStorage.setItem("df4611-lang",l)}catch(e){}
+  if(location.hash!=="#"+l) history.replaceState(null,"","#"+l);
+}
+$("langAr").addEventListener("click",()=>apply("ar")); $("langEn").addEventListener("click",()=>apply("en"));
+$("replay").addEventListener("click",()=>playWave());
+window.addEventListener("hashchange",()=>{const h=location.hash.slice(1); if((h==="ar"||h==="en")&&h!==lang) apply(h)});
+
+let start="ar"; const hsh=location.hash.slice(1);
+if(hsh==="ar"||hsh==="en") start=hsh; else { try{const s=localStorage.getItem("df4611-lang"); if(s==="ar"||s==="en") start=s}catch(e){} }
+apply(start);
+</script>
+</body>
+</html>
