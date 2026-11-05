@@ -144,9 +144,6 @@ html[dir="rtl"] .ba-row .v{text-align:right}
 .demo{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;margin-top:20px}
 .demo-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
 .demo-lbl{font-size:13px;color:var(--sub);margin-bottom:6px}
-.try{font-size:12px;color:var(--faint);display:flex;align-items:center;gap:6px}
-.try .dot{width:7px;height:7px;border-radius:50%;background:var(--safe);animation:pulse 1.6s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
 .field{display:flex;align-items:center;gap:12px;margin-top:16px;border:1px solid var(--line);background:var(--stage);border-radius:14px;padding:14px 16px;transition:background .3s,border-color .3s}
 .field.ok{background:var(--safe-bg);border-color:var(--safe-br)} .field.no{background:var(--risk-bg);border-color:var(--risk-br)}
 .field .l{font-size:13px;color:var(--sub)}
@@ -278,7 +275,6 @@ footer b{color:var(--ink)}
             <button type="button" id="r2" aria-pressed="false" data-t="r2"></button>
           </div>
         </div>
-        <div class="try"><span class="dot"></span><span data-t="tryIt"></span></div>
       </div>
       <div class="field" id="field">
         <div><div class="l" data-t="idLabel"></div><div class="v" id="fVal">••••••7465</div></div>
@@ -328,7 +324,7 @@ const T={
   c3:"كيف بيظهر لك التغيير؟",h2_3:"نفس الملف، لكن محمي.",today:"اليوم",after:"بعد التغيير",pVis:"● ظاهرة كاملة",pMsk:"● مخفية",
   baLabels:["الاسم الكامل","رقم الهوية / الإقامة","IBAN","رقم الجوال","البريد الإلكتروني"],
   c4:"مين يقدر يشوف البيانات؟",h2_4:"مخفية للجميع، وتظهر حسب الصلاحية.",l4:"البيانات مخفية دائمًا، والأدوار المصرّح لها فقط تقدر تُظهرها.",
-  viewAs:"عرض البيانات كـ",tryIt:"جرّب: اضغط على العين",idLabel:"رقم الهوية / الإقامة",r1:"مدير النظام",r2:"خدمة العملاء",r1en:"Super Admin",r2en:"Customer Care",
+  viewAs:"عرض البيانات كـ",idLabel:"رقم الهوية / الإقامة",r1:"مدير النظام",r2:"خدمة العملاء",r1en:"Super Admin",r2en:"Customer Care",
   s0:"● مخفية افتراضيًا",s1:"✓ عندك صلاحية: تظهر كاملة",s2:"ما عندك صلاحية: تبقى مخفية",
   steps:[["مخفية افتراضيًا","تظهر البيانات مخفية."],["طلب الإظهار","بالضغط على أيقونة العين."],["التحقق من الصلاحية","هل يسمح دورك بالإظهار؟"]],
   rolesT:"مثال على الأدوار",r1can:"يقدر يُظهرها",r2can:"تظهر له مخفية",
@@ -350,7 +346,7 @@ const T={
   c3:"How will you see it?",h2_3:"Same record, now protected.",today:"Today",after:"After the change",pVis:"● Fully visible",pMsk:"● Masked",
   baLabels:["Full Name","National ID / Iqama","IBAN","Mobile","Email"],
   c4:"Who can see the data?",h2_4:"Masked for everyone. Revealed by permission.",l4:"Data is always masked by default, and only authorized roles can reveal it.",
-  viewAs:"View data as",tryIt:"Try it: click the eye",idLabel:"National ID / Iqama",r1:"Super Admin",r2:"Customer Care",r1en:"",r2en:"",
+  viewAs:"View data as",idLabel:"National ID / Iqama",r1:"Super Admin",r2:"Customer Care",r1en:"",r2en:"",
   s0:"● Masked by default",s1:"✓ You have permission: shown in full",s2:"No permission: stays masked",
   steps:[["Masked by default","Values start masked."],["Reveal requested","By clicking the eye icon."],["Permission checked","Does your role allow it?"]],
   rolesT:"Example roles",r1can:"Can reveal",r2can:"Sees masked only",
@@ -401,7 +397,7 @@ function setStatus(kind){
   if(kind===2){s.className="status";s.innerHTML='<svg class="i"><use href="#lock"/></svg>'+esc(t.s2)}
 }
 let revealed=false;
-function resetDemo(){revealed=false;$("fVal").textContent=MASK[0];$("eyeIc").innerHTML='<use href="#eye"/>';setStatus(0)}
+function resetDemo(){revealed=false;$("fVal").textContent=MASK[0];$("eyeIc").innerHTML=role===2?'<use href="#lock"/>':'<use href="#eye"/>';setStatus(role===2?2:0)}
 $("eyeBtn").addEventListener("click",()=>{
   if(role===1){revealed=!revealed;$("fVal").textContent=revealed?FULL[0]:MASK[0];$("eyeIc").innerHTML=revealed?'<use href="#eyeoff"/>':'<use href="#eye"/>';setStatus(revealed?1:0)}
   else{$("eyeIc").innerHTML='<use href="#lock"/>';setStatus(2);const f=$("field");f.classList.remove("shake");void f.offsetWidth;f.classList.add("shake")}
